@@ -4,6 +4,12 @@ function jexpr(input, expr) {
 
 	if(!expr || expr.length == 0) { return res; }
 
+	for(var i in expr) {
+		var re = expr[i].match(/^\/(.+?)\/([igm]*)$/);
+		if(!re) { continue; }
+		expr[i] = new RegExp(re[1], re[2]);
+	}
+
 	function walk(obj, step) {
 
 		function addToRes(data) {
