@@ -6,30 +6,32 @@ function jexpr(input, expr) {
 
 	function walk(obj, step) {
 
-		function addToRes(val) {
+		function addToRes(data) {
 
-			if(step == expr.length - 1) { res.push(val); }
+			if(step == expr.length - 1) { res.push(data); }
 
 		}
 
 		var step = step || 0;
 
+		val = step == expr.length - 1 ? true : false;
+
 		if(typeof(expr[step]) === 'object') {
 			// regular expression
-			if(step < expr.length - 1) {
+			if(val) {
+				// match on values
+				if(expr[step].test(obj)) {
+					addToRes(obj);
+					walk(obj[i], step + 1);
+				}
+			}
+			else {
 				// match on keys
 				for(var i in obj) {
 					if(expr[step].test(i)) {
 						addToRes(obj[i]);
 						walk(obj[i], step + 1);
 					}
-				}
-			}
-			else {
-				// match on values
-				if(expr[step].test(obj)) {
-					addToRes(obj);
-					walk(obj[i], step + 1);
 				}
 			}
 		}
