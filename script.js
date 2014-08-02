@@ -36,9 +36,9 @@ function jexpr(input, expr) {
 			}
 		}
 
-		if(typeof(expr[step]) === 'string') {
+		if(typeof(expr[step]) === 'string' || typeof(expr[step]) === 'number') {
 
-			if(expr[step] == '*') {
+			if(expr[step] == '*' && typeof(obj) === 'object') {
 				// iterate this level
 				for(var i in obj) {
 					addToRes(obj[i]);
@@ -46,21 +46,13 @@ function jexpr(input, expr) {
 				}
 			}
 
-			else if(/[0-9]+-[0-9]+/.test(expr[step])) {
-				var range = expr[step].split('-');
-				for(var i = range[0]; i <= range[1]; i++) {
-					addToRes(obj[i]);
-					walk(obj[i], step + 1);
+			if(val) {
+
+				if(obj[expr[step]]) {
+					addToRes(obj[expr[step]]);
+					walk(obj[expr[step]], step + 1);
 				}
-			}
 
-		}
-
-		if(typeof(expr[step]) === 'number' || typeof(expr[step]) === 'string') {
-
-			if(obj[expr[step]]) {
-				addToRes(obj[expr[step]]);
-				walk(obj[expr[step]], step + 1);
 			}
 
 		}
