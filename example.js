@@ -1,3 +1,5 @@
+var jexpr = require('./jexpr.js');
+
 var command = [
 	{
 		"command": "open",

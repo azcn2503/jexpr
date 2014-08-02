@@ -64,3 +64,7 @@ function jexpr(input, expr) {
 	return res;
 
 }
+
+if(module && module.exports) {
+	module.exports = jexpr;
+}
